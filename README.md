@@ -6,8 +6,8 @@ Proyecto desarrollado para la asignatura **DSY1103 - Desarrollo FullStack 1**
 ## Integrantes
 
 - Maxi Serey - GitHub: [@maxxrry](https://github.com/maxxrry)
-- Vicente Muñoz - GitHub: [@v]
--Jose Taborga - GitHub:
+- Vicente Muñoz - GitHub: [@Sk1xez](https://github.com/Sk1xez)
+-Jose Taborga - GitHub:[]
 
 ## Descripción del proyecto
 
