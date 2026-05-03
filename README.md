@@ -7,7 +7,7 @@ Proyecto desarrollado para la asignatura **DSY1103 - Desarrollo FullStack 1**
 
 - Maxi Serey - GitHub: [@maxxrry](https://github.com/maxxrry)
 - Vicente Muñoz - GitHub: [@Sk1xez](https://github.com/Sk1xez)
--Jose Taborga - GitHub:[]
+-Jose Taborga - GitHub:[@joo04-dot](https://github.com/joo04-dot)
 
 ## Descripción del proyecto
 
@@ -59,4 +59,4 @@ separación clara de responsabilidades por capas.
 
 ## Estado del proyecto
 
-🚧 En desarrollo - Evaluación Parcial 2 - Semana 1
+Parcialmente Terminado , 10 Microservicios integrado solo falta probrar con la BD
