@@ -1,6 +1,7 @@
 package com.minimarket.msventas.exception;
 
 import com.minimarket.msventas.dto.ErrorResponseDTO;
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +96,60 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(ServicioNoDisponibleException.class)
+    public ResponseEntity<ErrorResponseDTO> manejarServicioNoDisponible(
+            ServicioNoDisponibleException ex,
+            HttpServletRequest request) {
+
+        log.error("Servicio remoto no disponible: {}", ex.getMessage());
+
+        ErrorResponseDTO error = ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.SERVICE_UNAVAILABLE.value())
+                .error(HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase())
+                .mensaje(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
+
+    @ExceptionHandler(FeignException.NotFound.class)
+    public ResponseEntity<ErrorResponseDTO> manejarFeignNotFound(
+            FeignException.NotFound ex,
+            HttpServletRequest request) {
+
+        log.warn("Recurso remoto no encontrado: {}", ex.getMessage());
+
+        ErrorResponseDTO error = ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(HttpStatus.NOT_FOUND.getReasonPhrase())
+                .mensaje("Recurso referenciado no existe en el servicio remoto")
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<ErrorResponseDTO> manejarFeignGenerico(
+            FeignException ex,
+            HttpServletRequest request) {
+
+        log.error("Error al invocar servicio remoto. Status: {}", ex.status(), ex);
+
+        ErrorResponseDTO error = ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_GATEWAY.value())
+                .error(HttpStatus.BAD_GATEWAY.getReasonPhrase())
+                .mensaje("Error de comunicación con un microservicio dependiente")
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(error);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

@@ -19,7 +19,10 @@ public class DetalleVentaRequestDTO {
     @Positive(message = "El ID del producto debe ser positivo")
     private Long productoId;
 
-    @NotBlank(message = "El nombre del producto es obligatorio")
+    /**
+     * Opcional. Si no se envía, se obtiene desde ms-catalogo vía Feign.
+     * Si se envía, se ignora y se usa el valor del catálogo (fuente de verdad).
+     */
     @Size(max = 100, message = "El nombre no puede superar los 100 caracteres")
     private String nombreProducto;
 
@@ -27,10 +30,16 @@ public class DetalleVentaRequestDTO {
     @Min(value = 1, message = "La cantidad debe ser al menos 1")
     private Integer cantidad;
 
-    @NotNull(message = "El precio unitario es obligatorio")
+    /**
+     * Opcional. Si no se envía, se obtiene desde ms-catalogo vía Feign.
+     */
     @DecimalMin(value = "0.01", message = "El precio unitario debe ser mayor a cero")
     private BigDecimal precioUnitario;
 
+    /**
+     * Opcional. Si es null o cero, se intenta aplicar la mejor promoción
+     * activa para el producto/categoría (vía ms-promociones).
+     */
     @DecimalMin(value = "0.00", message = "El descuento no puede ser negativo")
-    private BigDecimal descuentoUnitario = BigDecimal.ZERO;
+    private BigDecimal descuentoUnitario;
 }
