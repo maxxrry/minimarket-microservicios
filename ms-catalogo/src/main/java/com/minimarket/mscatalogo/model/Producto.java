@@ -1,5 +1,6 @@
 package com.minimarket.mscatalogo.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Entidad que representa un producto del minimarket")
 public class Producto {
 
     /**
@@ -27,6 +29,7 @@ public class Producto {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "ID único del producto", example = "1")
     private Long id;
 
     /**
@@ -34,6 +37,7 @@ public class Producto {
      * No puede ser null y máximo 100 caracteres.
      */
     @Column(name = "nombre", nullable = false, length = 100)
+    @Schema(description = "Nombre del producto", example = "Coca-Cola 1.5L", maxLength = 100)
     private String nombre;
 
     /**
@@ -41,6 +45,7 @@ public class Producto {
      * Permite hasta 500 caracteres.
      */
     @Column(name = "descripcion", length = 500)
+    @Schema(description = "Descripción detallada del producto", example = "Bebida gaseosa cola", maxLength = 500)
     private String descripcion;
 
     /**
@@ -49,6 +54,7 @@ public class Producto {
      * en operaciones decimales (estándar para valores monetarios).
      */
     @Column(name = "precio", nullable = false, precision = 10, scale = 2)
+    @Schema(description = "Precio del producto", example = "2490.00")
     private BigDecimal precio;
 
     /**
@@ -56,6 +62,7 @@ public class Producto {
      * No se puede repetir en la BD (constraint UNIQUE).
      */
     @Column(name = "codigo_barra", unique = true, length = 50)
+    @Schema(description = "Código de barras único", example = "7800000000001", maxLength = 50)
     private String codigoBarra;
 
     /**
@@ -64,6 +71,7 @@ public class Producto {
      * No usamos @ManyToOne porque están en bases de datos separadas.
      */
     @Column(name = "categoria_id", nullable = false)
+    @Schema(description = "ID de la categoría del producto", example = "1")
     private Long categoriaId;
 
     /**
@@ -71,6 +79,7 @@ public class Producto {
      * REFERENCIA LÓGICA al microservicio ms-proveedores.
      */
     @Column(name = "proveedor_id", nullable = false)
+    @Schema(description = "ID del proveedor del producto", example = "1")
     private Long proveedorId;
 
     /**
@@ -78,6 +87,7 @@ public class Producto {
      * Por defecto se crea como activo (true).
      */
     @Column(name = "activo", nullable = false)
+    @Schema(description = "Indica si el producto está activo", example = "true")
     private Boolean activo = true;
 
     /**
@@ -86,6 +96,7 @@ public class Producto {
      */
     @CreationTimestamp
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    @Schema(description = "Fecha de creación del registro", example = "2026-01-15 10:30:00")
     private LocalDateTime fechaCreacion;
 
     /**
@@ -94,5 +105,6 @@ public class Producto {
      */
     @UpdateTimestamp
     @Column(name = "fecha_actualizacion")
+    @Schema(description = "Fecha de última actualización", example = "2026-01-20 14:45:00")
     private LocalDateTime fechaActualizacion;
 }
