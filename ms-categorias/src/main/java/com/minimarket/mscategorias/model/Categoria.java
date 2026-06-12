@@ -1,5 +1,6 @@
 package com.minimarket.mscategorias.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Entidad que representa una categoría de productos")
 public class Categoria {
 
     /**
@@ -27,6 +29,7 @@ public class Categoria {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "ID único de la categoría", example = "1")
     private Long id;
 
     /**
@@ -34,12 +37,14 @@ public class Categoria {
      * No puede repetirse.
      */
     @Column(name = "nombre", nullable = false, unique = true, length = 50)
+    @Schema(description = "Nombre de la categoría", example = "Lácteos", maxLength = 50)
     private String nombre;
 
     /**
      * Descripción detallada de la categoría.
      */
     @Column(name = "descripcion", length = 255)
+    @Schema(description = "Descripción de la categoría", example = "Productos lácteos y derivados")
     private String descripcion;
 
     /**
@@ -47,6 +52,7 @@ public class Categoria {
      * Útil para sistemas internos y reportes.
      */
     @Column(name = "codigo", nullable = false, unique = true, length = 20)
+    @Schema(description = "Código interno único", example = "LAC-001", maxLength = 20)
     private String codigo;
 
     /**
@@ -54,6 +60,7 @@ public class Categoria {
      * Por defecto, true al crear.
      */
     @Column(name = "activa", nullable = false)
+    @Schema(description = "Indica si la categoría está activa", example = "true")
     private Boolean activa = true;
 
     /**
@@ -61,6 +68,7 @@ public class Categoria {
      */
     @CreationTimestamp
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    @Schema(description = "Fecha de creación", example = "2026-01-15 10:30:00")
     private LocalDateTime fechaCreacion;
 
     /**
@@ -68,5 +76,6 @@ public class Categoria {
      */
     @UpdateTimestamp
     @Column(name = "fecha_actualizacion")
+    @Schema(description = "Fecha de última actualización", example = "2026-01-20 14:45:00")
     private LocalDateTime fechaActualizacion;
 }
